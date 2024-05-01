@@ -17,13 +17,21 @@ const UserSchema = new mongoose.Schema({
     avatarUrl: {
       type: String,
       required: false
+    },
+    isEmailConfirmed: {
+      type: Boolean,
+      default: false,
+    },
+    emailActivationLink: {
+      type: String,
+      required: true
     }
   },
   {
     timestamps: true,
   }
 )
-const UserSchemaModel = mongoose.model('User', UserSchema);
+const UserModel = mongoose.model('User', UserSchema);
 
 
-export {UserSchemaModel}
+export {UserModel}

@@ -1,12 +1,21 @@
 import express from 'express'
-import {UserRouter} from "./express/user.routes.js";
-import {AuthRouter} from "./routes/auth.routes.js";
+import {AuthRouter} from "./routes/auth.js";
+import {mongoDBConnect} from "./database.js";
+import cors from 'cors'
+import dotenv from "dotenv";
+import cookieParser from 'cookie-parser'
+
+dotenv.config()
 
 const server = express()
-const serverPort = 5000;
+const serverPort = process.env.SERVER_PORT || 3000;
+
+mongoDBConnect()
 
 server.use(express.json())
-server.use('/api', UserRouter)
+server.use(cors())
+server.use(cookieParser())
+
 server.use('/api', AuthRouter)
 
 server.listen(serverPort, (err) => {
