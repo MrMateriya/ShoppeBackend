@@ -1,11 +1,10 @@
+import 'dotenv/config'
+
 import express from 'express'
 import {AuthRouter} from "./routes/auth.js";
 import {mongoDBConnect} from "./database.js";
 import cors from 'cors'
-import dotenv from "dotenv";
 import cookieParser from 'cookie-parser'
-
-dotenv.config()
 
 const server = express()
 const serverPort = process.env.SERVER_PORT || 3000;
@@ -13,7 +12,13 @@ const serverPort = process.env.SERVER_PORT || 3000;
 mongoDBConnect()
 
 server.use(express.json())
-server.use(cors())
+server.use(cors({
+  origin: process.env.URL_FRONTEND,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 200,
+  credentials: true
+}))
 server.use(cookieParser())
 
 server.use('/api', AuthRouter)

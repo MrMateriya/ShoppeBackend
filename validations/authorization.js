@@ -1,7 +1,7 @@
-import {header} from "express-validator";
+import {cookie} from "express-validator";
 
 const checkAuthorizationValidation = [
-  header('authorization', 'Authorization header не найден'),
+  cookie('accessToken', 'AccessToken не найден'),
 ]
 
 export {checkAuthorizationValidation}
